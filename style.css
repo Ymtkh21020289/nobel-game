@@ -4,6 +4,23 @@ body {
   font-family: sans-serif;
 }
 
+#title {
+  text-align: center;
+  margin-top: 100px;
+}
+
+#title h1 {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+#title button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 30px;
+  font-size: 18px;
+}
+
 #game {
   width: 600px;
   margin: 50px auto;
