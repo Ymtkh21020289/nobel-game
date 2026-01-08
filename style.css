@@ -18,11 +18,11 @@ body {
 
 #menu {
   margin-top: 10px;
-  text-align: right;
+  text-align: center;
 }
 
 #menu button {
-  margin-left: 5px;
+  margin: 4px;
 }
 
 #choices button {
