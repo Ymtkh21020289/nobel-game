@@ -16,6 +16,15 @@ body {
   cursor: pointer;
 }
 
+#menu {
+  margin-top: 10px;
+  text-align: right;
+}
+
+#menu button {
+  margin-left: 5px;
+}
+
 #choices button {
   display: block;
   width: 100%;
