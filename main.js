@@ -9,8 +9,24 @@ const saveBtn = document.getElementById("save");
 const loadBtn = document.getElementById("load");
 
 function checkCondition(choice) {
+  // true / false フラグ
   if (choice.if && !flags[choice.if]) return false;
   if (choice.ifNot && flags[choice.ifNot]) return false;
+
+  // 数値条件（以上）
+  if (choice.ifValue) {
+    const key = Object.keys(choice.ifValue)[0];
+    const value = choice.ifValue[key];
+    if ((flags[key] || 0) < value) return false;
+  }
+
+  // 数値条件（未満）
+  if (choice.ifValueLess) {
+    const key = Object.keys(choice.ifValueLess)[0];
+    const value = choice.ifValueLess[key];
+    if ((flags[key] || 0) >= value) return false;
+  }
+
   return true;
 }
 
@@ -29,9 +45,18 @@ function showScene(key) {
       btn.textContent = choice.text;
 
       btn.onclick = () => {
+        // 数値加算
+        if (choice.add) {
+          for (const key in choice.add) {
+            flags[key] = (flags[key] || 0) + choice.add[key];
+          }
+        }
+
+        // boolean フラグ
         if (choice.setFlag) {
           flags[choice.setFlag] = true;
         }
+
         showScene(choice.next);
       };
 
