@@ -74,32 +74,43 @@ textDiv.addEventListener("click", () => {
 });
 
 // 💾 セーブ
-saveBtn.onclick = () => {
+function save(slot) {
   const data = {
     current,
     flags
   };
-  localStorage.setItem("novelSave", JSON.stringify(data));
-  alert("セーブしました");
-};
+  localStorage.setItem("novelSave" + slot, JSON.stringify(data));
+  alert(`スロット${slot}にセーブしました`);
+}
 
-// 📂 ロード
-loadBtn.onclick = () => {
-  const json = localStorage.getItem("novelSave");
+// 📂 ロード処理
+function load(slot) {
+  const json = localStorage.getItem("novelSave" + slot);
   if (!json) {
-    alert("セーブデータがありません");
+    alert(`スロット${slot}は空です`);
     return;
   }
 
   const data = JSON.parse(json);
-  current = data.current;
 
-  // flags を復元
-  for (const key in data.flags) {
-    flags[key] = data.flags[key];
+  // flags 初期化
+  for (const k in flags) delete flags[k];
+
+  current = data.current;
+  for (const k in data.flags) {
+    flags[k] = data.flags[k];
   }
 
   showScene(current);
-};
+}
+
+// ボタンにイベント付与
+document.querySelectorAll(".save").forEach(btn => {
+  btn.onclick = () => save(btn.dataset.slot);
+});
+
+document.querySelectorAll(".load").forEach(btn => {
+  btn.onclick = () => load(btn.dataset.slot);
+});
 
 showScene(current);
