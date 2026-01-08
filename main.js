@@ -1,5 +1,7 @@
 import { scenario } from "./scenario.js";
 
+const flags = {};
+
 let current = "start";
 
 const textDiv = document.getElementById("text");
