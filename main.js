@@ -5,6 +5,8 @@ const flags = {};
 
 const textDiv = document.getElementById("text");
 const choicesDiv = document.getElementById("choices");
+const saveBtn = document.getElementById("save");
+const loadBtn = document.getElementById("load");
 
 function checkCondition(choice) {
   if (choice.if && !flags[choice.if]) return false;
@@ -38,11 +40,41 @@ function showScene(key) {
   }
 }
 
+// クリックで次へ
 textDiv.addEventListener("click", () => {
   const scene = scenario[current];
   if (scene.next && !scene.choices) {
     showScene(scene.next);
   }
 });
+
+// 💾 セーブ
+saveBtn.onclick = () => {
+  const data = {
+    current,
+    flags
+  };
+  localStorage.setItem("novelSave", JSON.stringify(data));
+  alert("セーブしました");
+};
+
+// 📂 ロード
+loadBtn.onclick = () => {
+  const json = localStorage.getItem("novelSave");
+  if (!json) {
+    alert("セーブデータがありません");
+    return;
+  }
+
+  const data = JSON.parse(json);
+  current = data.current;
+
+  // flags を復元
+  for (const key in data.flags) {
+    flags[key] = data.flags[key];
+  }
+
+  showScene(current);
+};
 
 showScene(current);
