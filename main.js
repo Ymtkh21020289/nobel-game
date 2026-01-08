@@ -3,30 +3,29 @@ import { scenario } from "./scenario.js";
 let current = "start";
 const flags = {};
 
+const titleDiv = document.getElementById("title");
+const gameDiv = document.getElementById("game");
+
 const textDiv = document.getElementById("text");
 const choicesDiv = document.getElementById("choices");
-const saveBtn = document.getElementById("save");
-const loadBtn = document.getElementById("load");
+
+const newGameBtn = document.getElementById("newGame");
+const openLoadBtn = document.getElementById("openLoad");
+const loadMenu = document.getElementById("loadMenu");
+const toTitleBtn = document.getElementById("toTitle");
 
 function checkCondition(choice) {
-  // true / false フラグ
   if (choice.if && !flags[choice.if]) return false;
   if (choice.ifNot && flags[choice.ifNot]) return false;
 
-  // 数値条件（以上）
   if (choice.ifValue) {
-    const key = Object.keys(choice.ifValue)[0];
-    const value = choice.ifValue[key];
-    if ((flags[key] || 0) < value) return false;
+    const k = Object.keys(choice.ifValue)[0];
+    if ((flags[k] || 0) < choice.ifValue[k]) return false;
   }
-
-  // 数値条件（未満）
   if (choice.ifValueLess) {
-    const key = Object.keys(choice.ifValueLess)[0];
-    const value = choice.ifValueLess[key];
-    if ((flags[key] || 0) >= value) return false;
+    const k = Object.keys(choice.ifValueLess)[0];
+    if ((flags[k] || 0) >= choice.ifValueLess[k]) return false;
   }
-
   return true;
 }
 
@@ -45,18 +44,14 @@ function showScene(key) {
       btn.textContent = choice.text;
 
       btn.onclick = () => {
-        // 数値加算
         if (choice.add) {
-          for (const key in choice.add) {
-            flags[key] = (flags[key] || 0) + choice.add[key];
+          for (const k in choice.add) {
+            flags[k] = (flags[k] || 0) + choice.add[k];
           }
         }
-
-        // boolean フラグ
         if (choice.setFlag) {
           flags[choice.setFlag] = true;
         }
-
         showScene(choice.next);
       };
 
@@ -68,10 +63,37 @@ function showScene(key) {
 // クリックで次へ
 textDiv.addEventListener("click", () => {
   const scene = scenario[current];
-  if (scene.next && !scene.choices) {
-    showScene(scene.next);
-  }
+  if (scene.next && !scene.choices) showScene(scene.next);
 });
+
+function startGame() {
+  titleDiv.style.display = "none";
+  gameDiv.style.display = "block";
+  showScene(current);
+}
+
+function resetGame() {
+  current = "start";
+  for (const k in flags) delete flags[k];
+}
+
+// ニューゲーム
+newGameBtn.onclick = () => {
+  resetGame();
+  startGame();
+};
+
+// ロードメニュー表示
+openLoadBtn.onclick = () => {
+  loadMenu.style.display =
+    loadMenu.style.display === "none" ? "block" : "none";
+};
+
+// タイトルへ戻る
+toTitleBtn.onclick = () => {
+  gameDiv.style.display = "none";
+  titleDiv.style.display = "block";
+};
 
 // 💾 セーブ
 function save(slot) {
@@ -92,16 +114,14 @@ function load(slot) {
   }
 
   const data = JSON.parse(json);
-
-  // flags 初期化
-  for (const k in flags) delete flags[k];
+  resetGame();
 
   current = data.current;
   for (const k in data.flags) {
     flags[k] = data.flags[k];
   }
 
-  showScene(current);
+  startGame();
 }
 
 // ボタンにイベント付与
@@ -113,4 +133,3 @@ document.querySelectorAll(".load").forEach(btn => {
   btn.onclick = () => load(btn.dataset.slot);
 });
 
-showScene(current);
