@@ -1,28 +1,26 @@
 export const scenario = {
   start: {
-    text: "目が覚めると、知らない部屋にいた。",
-    next: "choice1"
-  },
-
-  choice1: {
-    text: "どうする？",
+    text: "机の上に鍵が置いてある。",
     choices: [
-      { text: "周囲を見る", next: "look" },
-      { text: "もう一度寝る", next: "sleep" }
+      { text: "鍵を拾う", setFlag: "key", next: "room" },
+      { text: "何もしない", next: "room" }
     ]
   },
 
-  look: {
-    text: "古い机と椅子がある。",
-    next: "end"
+  room: {
+    text: "ドアの前に立っている。",
+    choices: [
+      { text: "ドアを開ける", if: "key", next: "escape" },
+      { text: "ドアを開ける", ifNot: "key", next: "locked" }
+    ]
   },
 
-  sleep: {
-    text: "そのまま眠り続けた……。",
-    next: "end"
+  locked: {
+    text: "鍵がかかっているようだ。",
+    next: "room"
   },
 
-  end: {
-    text: "― END ―"
+  escape: {
+    text: "鍵を使って脱出した！",
   }
 };
