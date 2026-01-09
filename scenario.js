@@ -1,26 +1,35 @@
 export const scenario = {
   start: {
-    text: "机の上に鍵が置いてある。",
+    bg: "bg/bright_ruin.jpg",
+    chara: null,
+    text: "目が覚めると、知らない部屋にいた。",
+    next: "street"
+  },
+
+  street: {
+    bg: "bg/bright_ruin.jpg",
+    chara: null,
+    text: "彼女がこちらを見ている。",
     choices: [
-      { text: "鍵を拾う", setFlag: "key", next: "room" },
-      { text: "何もしない", next: "room" }
+      {
+        text: "話しかける",
+        add: { love: 1 },
+        next: "talk"
+      },
+      {
+        text: "立ち去る",
+        next: "end"
+      }
     ]
   },
 
-  room: {
-    text: "ドアの前に立っている。",
-    choices: [
-      { text: "ドアを開ける", if: "key", next: "escape" },
-      { text: "ドアを開ける", ifNot: "key", next: "locked" }
-    ]
+  talk: {
+    chara: null,
+    text: "二人はしばらく話をした。",
+    next: "end"
   },
 
-  locked: {
-    text: "鍵がかかっているようだ。",
-    next: "room"
-  },
-
-  escape: {
-    text: "鍵を使って脱出した！",
+  end: {
+    text: "― END ―"
   }
 };
