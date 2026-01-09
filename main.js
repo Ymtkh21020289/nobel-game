@@ -14,6 +14,9 @@ const openLoadBtn = document.getElementById("openLoad");
 const loadMenu = document.getElementById("loadMenu");
 const toTitleBtn = document.getElementById("toTitle");
 
+// --------------------
+// 基本ロジック
+// --------------------
 function checkCondition(choice) {
   if (choice.if && !flags[choice.if]) return false;
   if (choice.ifNot && flags[choice.ifNot]) return false;
@@ -60,12 +63,14 @@ function showScene(key) {
   }
 }
 
-// クリックで次へ
 textDiv.addEventListener("click", () => {
   const scene = scenario[current];
   if (scene.next && !scene.choices) showScene(scene.next);
 });
 
+// --------------------
+// タイトル関連
+// --------------------
 function startGame() {
   titleDiv.style.display = "none";
   gameDiv.style.display = "block";
@@ -95,17 +100,15 @@ toTitleBtn.onclick = () => {
   titleDiv.style.display = "block";
 };
 
-// 💾 セーブ
+// --------------------
+// セーブ／ロード
+// --------------------
 function save(slot) {
-  const data = {
-    current,
-    flags
-  };
+  const data = { current, flags };
   localStorage.setItem("novelSave" + slot, JSON.stringify(data));
   alert(`スロット${slot}にセーブしました`);
 }
 
-// 📂 ロード処理
 function load(slot) {
   const json = localStorage.getItem("novelSave" + slot);
   if (!json) {
@@ -124,7 +127,6 @@ function load(slot) {
   startGame();
 }
 
-// ボタンにイベント付与
 document.querySelectorAll(".save").forEach(btn => {
   btn.onclick = () => save(btn.dataset.slot);
 });
@@ -132,4 +134,3 @@ document.querySelectorAll(".save").forEach(btn => {
 document.querySelectorAll(".load").forEach(btn => {
   btn.onclick = () => load(btn.dataset.slot);
 });
-
