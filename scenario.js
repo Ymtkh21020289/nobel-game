@@ -1,13 +1,13 @@
 export const scenario = {
   start: {
-    bg: "bg/bright_ruin.jpg",
+    bg: "bg/bright_ruins.jpg",
     chara: null,
     text: "目が覚めると、知らない部屋にいた。",
     next: "street"
   },
 
   street: {
-    bg: "bg/bright_ruin.jpg",
+    bg: "bg/bright_ruins.jpg",
     chara: null,
     text: "彼女がこちらを見ている。",
     choices: [
