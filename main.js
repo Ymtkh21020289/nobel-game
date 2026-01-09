@@ -36,6 +36,21 @@ function showScene(key) {
   const scene = scenario[key];
   current = key;
 
+  // 背景
+  if (scene.bg !== undefined) {
+    bgImg.src = scene.bg ? "images/" + scene.bg : "";
+  }
+
+  // 立ち絵
+  if (scene.chara !== undefined) {
+    if (scene.chara === null) {
+      charaImg.style.display = "none";
+    } else {
+      charaImg.src = "images/" + scene.chara;
+      charaImg.style.display = "block";
+    }
+  }
+
   textDiv.textContent = scene.text;
   choicesDiv.innerHTML = "";
 
@@ -52,9 +67,7 @@ function showScene(key) {
             flags[k] = (flags[k] || 0) + choice.add[k];
           }
         }
-        if (choice.setFlag) {
-          flags[choice.setFlag] = true;
-        }
+        if (choice.setFlag) flags[choice.setFlag] = true;
         showScene(choice.next);
       };
 
