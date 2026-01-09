@@ -2,6 +2,8 @@ import { scenario } from "./scenario.js";
 
 let current = "start";
 const flags = {};
+const bgImg = document.getElementById("bg");
+const charaImg = document.getElementById("chara");
 
 const titleDiv = document.getElementById("title");
 const gameDiv = document.getElementById("game");
