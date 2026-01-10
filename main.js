@@ -3,6 +3,9 @@ import { scenario } from "./scenario.js";
 let textIndex = 0;
 let current = "start";
 const flags = {};
+let isTyping = false;     // 今文字表示中か？
+let typingTimer = null; // setInterval管理用
+
 const bgImg = document.getElementById("bg");
 const charaImg = document.getElementById("chara");
 
@@ -56,20 +59,45 @@ function showScene(key) {
   }
 
   choicesDiv.innerHTML = "";
-  textDiv.textContent = scene.texts[textIndex];
+  typeText(scene.texts[textIndex]);
+}
+
+function typeText(text) {
+  clearInterval(typingTimer);
+  textDiv.textContent = "";
+  isTyping = true;
+
+  let i = 0;
+  typingTimer = setInterval(() => {
+    textDiv.textContent += text[i];
+    i++;
+
+    if (i >= text.length) {
+      clearInterval(typingTimer);
+      isTyping = false;
+    }
+  }, 30); // ← 数字を小さくすると速くなる
 }
 
 textDiv.addEventListener("click", () => {
   const scene = scenario[current];
 
-  // 次のテキストがある
-  if (textIndex < scene.texts.length - 1) {
-    textIndex++;
+  // ① 文字表示中 → 一気に全文表示
+  if (isTyping) {
+    clearInterval(typingTimer);
     textDiv.textContent = scene.texts[textIndex];
+    isTyping = false;
     return;
   }
 
-  // テキスト終了後
+  // ② 次のテキストがある
+  if (textIndex < scene.texts.length - 1) {
+    textIndex++;
+    typeText(scene.texts[textIndex]);
+    return;
+  }
+
+  // ③ テキスト終了後
   if (scene.choices) {
     showChoices(scene.choices);
     return;
