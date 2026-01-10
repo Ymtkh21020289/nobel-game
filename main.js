@@ -55,7 +55,6 @@ function showScene(key) {
   const scene = scenario[key];
   current = key;
   textIndex = 0;
-  advanceText();
   
   // 背景
   if (scene.bg !== undefined) {
