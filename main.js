@@ -262,7 +262,7 @@ function showChoices(choices) {
 
 function showChara(id, face, pos = "center") {
   const img = document.getElementById(id);
-  img.src = `img/${id}_${face}.png`;
+  img.src = `images/chara/${id}_${face}.png`;
   img.style.opacity = 1;
 
   if (pos === "left") img.style.left = "10%";
