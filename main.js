@@ -9,6 +9,10 @@ const flags = {};
 let isTyping = false;     // 今文字表示中か？
 let typingTimer = null; // setInterval管理用
 
+let isAuto = false;
+let autoTimer = null;
+const AUTO_WAIT = 1200; // 全文表示後の待ち時間(ms)
+
 const bgImg = document.getElementById("bg");
 const charaImg = document.getElementById("chara");
 
@@ -84,6 +88,7 @@ function typeText(text) {
 
       // 🔽 ログに追加
       backlog.push(text);
+      scheduleAutoAdvance();
     }
   }, 30);
 }
@@ -102,6 +107,8 @@ function advanceText() {
     if (backlog[backlog.length - 1] !== t) {
         backlog.push(t);
     }
+
+    scheduleAutoAdvance();
     return;
   }
 
@@ -122,6 +129,31 @@ function advanceText() {
   if (scene.next) {
     showScene(scene.next);
   }
+}
+
+function startAuto() {
+  isAuto = true;
+  scheduleAutoAdvance();
+}
+
+function stopAuto() {
+  isAuto = false;
+  clearTimeout(autoTimer);
+}
+
+function scheduleAutoAdvance() {
+  clearTimeout(autoTimer);
+  if (!isAuto) return;
+
+  autoTimer = setTimeout(() => {
+    // ログ表示中・選択肢中は止める
+    const scene = scenario[current];
+    if (isLogOpen || scene.choices) {
+      stopAuto();
+      return;
+    }
+    advanceText();
+  }, AUTO_WAIT);
 }
 
 function openLog() {
@@ -148,6 +180,12 @@ logDiv.addEventListener("click", closeLog);
 document.addEventListener("keydown", (e) => {
   if (e.key === "l" || e.key === "L") {
     if (!isLogOpen) openLog();
+    return;
+  }
+
+  if (e.key === "a" || e.key === "A") {
+    if (isAuto) stopAuto();
+    else startAuto();
     return;
   }
 
