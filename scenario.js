@@ -1,6 +1,6 @@
 export const scenario = {
   start: {
-    bg: "bg/room.jpg",
+    bg: "bg/bright_ruins.jpg",
 
     texts: [
       "目が覚めると、知らない部屋にいた。",
@@ -12,7 +12,7 @@ export const scenario = {
   },
 
   hall: {
-    bg: "bg/hall.jpg",
+    bg: "bg/bright_ruins.jpg",
 
     texts: [
       "廊下に出た。",
