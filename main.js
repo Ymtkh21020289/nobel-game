@@ -81,9 +81,6 @@ function typeText(text) {
   let i = 0;
   textDiv.textContent = "";
   isTyping = true;
-  const scene = scenario[current];
-  const next = scene.texts[scene.texts.length];
-  currentEntry = next;
   typingTimer = setInterval(() => {
     textDiv.textContent += text[i];
     i++;
