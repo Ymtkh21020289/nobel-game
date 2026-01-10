@@ -1,5 +1,8 @@
 import { scenario } from "./scenario.js";
 
+const backlog = [];
+let isLogOpen = false;
+
 let textIndex = 0;
 let current = "start";
 const flags = {};
