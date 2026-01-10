@@ -1,35 +1,27 @@
 export const scenario = {
   start: {
-    bg: "bg/bright_ruins.jpg",
-    chara: null,
-    text: "目が覚めると、知らない部屋にいた。",
-    next: "street"
+    bg: "bg/room.jpg",
+
+    texts: [
+      "目が覚めると、知らない部屋にいた。",
+      "頭が少し痛む。",
+      "ここは……どこだ？"
+    ],
+
+    next: "hall"
   },
 
-  street: {
-    bg: "bg/bright_ruins.jpg",
-    chara: null,
-    text: "彼女がこちらを見ている。",
+  hall: {
+    bg: "bg/hall.jpg",
+
+    texts: [
+      "廊下に出た。",
+      "静まり返っている。"
+    ],
+
     choices: [
-      {
-        text: "話しかける",
-        add: { love: 1 },
-        next: "talk"
-      },
-      {
-        text: "立ち去る",
-        next: "end"
-      }
+      { text: "進む", next: "forward" },
+      { text: "戻る", next: "start" }
     ]
-  },
-
-  talk: {
-    chara: null,
-    text: "二人はしばらく話をした。",
-    next: "end"
-  },
-
-  end: {
-    text: "― END ―"
   }
 };
