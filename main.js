@@ -2,6 +2,7 @@ import { scenario } from "./scenario.js";
 
 const backlog = [];
 let isLogOpen = false;
+let currentEntry = null;
 
 let textIndex = 0;
 let current = "start";
@@ -77,14 +78,10 @@ function showScene(key) {
 }
 
 function typeText(text) {
-  clearInterval(typingTimer);
+  let i = 0;
   textDiv.textContent = "";
   isTyping = true;
-  const scene = scenario[current].next;
-  textIndex = 0;
-  const entry = scene.texts[textIndex];
 
-  let i = 0;
   typingTimer = setInterval(() => {
     textDiv.textContent += text[i];
     i++;
@@ -93,14 +90,12 @@ function typeText(text) {
       clearInterval(typingTimer);
       isTyping = false;
 
-      // 🔽 ログに追加
-      backlog.push(
-        entry.name ? `${entry.name}：${entry.text}` : entry.text
-      );
-      scheduleAutoAdvance();
+      // 🔔 表示完了通知
+      onTextFinished();
     }
   }, 30);
 }
+
 
 function updateName(name) {
   if (!name) {
@@ -114,46 +109,52 @@ function updateName(name) {
 
 function advanceText() {
   const scene = scenario[current];
+  const entry = scene.texts[textIndex];
 
-  // ① 文字表示中 → 全文表示
+  // ① 文字表示中 → 即全文
   if (isTyping) {
     clearInterval(typingTimer);
-
-    const entry = scene.texts[textIndex];
     textDiv.textContent = entry.text;
-    updateName(entry.name);
-
     isTyping = false;
 
-    if (backlog[backlog.length - 1] !== entry.text) {
-      backlog.push(
-        entry.name ? `${entry.name}：${entry.text}` : entry.text
-      );
-    }
-
-    scheduleAutoAdvance();
+    onTextFinished();
     return;
   }
 
-  // ② 次のテキストへ
+  // ② 次のテキスト
   if (textIndex < scene.texts.length - 1) {
     textIndex++;
-    const entry = scene.texts[textIndex];
-    updateName(entry.name);
-    typeText(entry.text);
+    const next = scene.texts[textIndex];
+
+    currentEntry = next;
+    updateName(next.name);
+    typeText(next.text);
     return;
   }
 
-  // ③ 選択肢表示
+  // ③ 選択肢
   if (scene.choices) {
+    stopAuto();
     showChoices(scene.choices);
     return;
   }
 
-  // ④ 次のシーン
+  // ④ 次シーン
   if (scene.next) {
     showScene(scene.next);
   }
+}
+
+function onTextFinished() {
+  if (!currentEntry) return;
+
+  const logText = currentEntry.name
+    ? `${currentEntry.name}：${currentEntry.text}`
+    : currentEntry.text;
+
+  backlog.push(logText);
+
+  scheduleAutoAdvance();
 }
 
 function startAuto() {
