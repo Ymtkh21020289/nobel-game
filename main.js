@@ -70,7 +70,9 @@ function showScene(key) {
   }
 
   choicesDiv.innerHTML = "";
-  typeText(scene.texts[textIndex]);
+  const entry = scene.texts[textIndex];
+  updateName(entry.name);
+  typeText(entry.text);
 }
 
 function typeText(text) {
@@ -88,10 +90,22 @@ function typeText(text) {
       isTyping = false;
 
       // 🔽 ログに追加
-      backlog.push(text);
+      backlog.push(
+        entry.name ? `${entry.name}：${entry.text}` : entry.text
+      );
       scheduleAutoAdvance();
     }
   }, 30);
+}
+
+function updateName(name) {
+  if (!name) {
+    nameBox.textContent = "";
+    nameBox.style.visibility = "hidden";
+  } else {
+    nameBox.textContent = name;
+    nameBox.style.visibility = "visible";
+  }
 }
 
 function advanceText() {
@@ -100,13 +114,17 @@ function advanceText() {
   // ① 文字表示中 → 全文表示
   if (isTyping) {
     clearInterval(typingTimer);
-    textDiv.textContent = scene.texts[textIndex];
+
+    const entry = scene.texts[textIndex];
+    textDiv.textContent = entry.text;
+    updateName(entry.name);
+
     isTyping = false;
-  
-    // 🔽 ログに追加（重複防止）
-    const t = scene.texts[textIndex];
-    if (backlog[backlog.length - 1] !== t) {
-        backlog.push(t);
+
+    if (backlog[backlog.length - 1] !== entry.text) {
+      backlog.push(
+        entry.name ? `${entry.name}：${entry.text}` : entry.text
+      );
     }
 
     scheduleAutoAdvance();
@@ -116,7 +134,9 @@ function advanceText() {
   // ② 次のテキストへ
   if (textIndex < scene.texts.length - 1) {
     textIndex++;
-    typeText(scene.texts[textIndex]);
+    const entry = scene.texts[textIndex];
+    updateName(entry.name);
+    typeText(entry.text);
     return;
   }
 
