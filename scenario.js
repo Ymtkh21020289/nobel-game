@@ -3,9 +3,9 @@ export const scenario = {
     bg: "bg/bright_ruins.jpg",
 
     texts: [
-      "目が覚めると、知らない部屋にいた。",
-      "頭が少し痛む。",
-      "ここは……どこだ？"
+      { name: "アリス", text: "こんにちは。" },
+      { name: "アリス", text: "今日はいい天気ですね。" },
+      { name: null, text: "静かな午後だった。" } // ナレーション
     ],
 
     next: "hall"
@@ -15,8 +15,9 @@ export const scenario = {
     bg: "bg/bright_ruins.jpg",
 
     texts: [
-      "廊下に出た。",
-      "静まり返っている。"
+      { name: "アリス", text: "こんにちは。" },
+      { name: "アリス", text: "今日はいい天気ですね。" },
+      { name: null, text: "静かな午後だった。" } // ナレーション
     ],
 
     choices: [
