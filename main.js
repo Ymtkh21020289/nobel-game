@@ -80,6 +80,7 @@ function typeText(text) {
   clearInterval(typingTimer);
   textDiv.textContent = "";
   isTyping = true;
+  const scene = scenario[key];
   const entry = scene.texts[textIndex];
 
   let i = 0;
