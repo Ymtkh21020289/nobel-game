@@ -93,6 +93,12 @@ function advanceText() {
     clearInterval(typingTimer);
     textDiv.textContent = scene.texts[textIndex];
     isTyping = false;
+  
+    // 🔽 ログに追加（重複防止）
+    const t = scene.texts[textIndex];
+    if (backlog[backlog.length - 1] !== t) {
+        backlog.push(t);
+    }
     return;
   }
 
