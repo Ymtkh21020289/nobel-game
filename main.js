@@ -55,7 +55,8 @@ function showScene(key) {
   const scene = scenario[key];
   current = key;
   textIndex = 0;
-
+  advanceText();
+  
   // 背景
   if (scene.bg !== undefined) {
     bgImg.src = scene.bg ? "images/" + scene.bg : "";
@@ -118,6 +119,14 @@ function advanceText() {
     isTyping = false;
 
     onTextFinished();
+    return;
+  }
+
+  // 🔽 command は即実行して次へ
+  if (entry.command) {
+    executeCommand(entry);
+    textIndex++;
+    advanceText();
     return;
   }
 
@@ -250,6 +259,40 @@ function showChoices(choices) {
 
     choicesDiv.appendChild(btn);
   });
+}
+
+function showChara(id, face, pos = "center") {
+  const img = document.getElementById(id);
+  img.src = `img/${id}_${face}.png`;
+  img.style.opacity = 1;
+
+  if (pos === "left") img.style.left = "10%";
+  if (pos === "center") img.style.left = "40%";
+  if (pos === "right") img.style.left = "70%";
+}
+
+function changeFace(id, face) {
+  const img = document.getElementById(id);
+  img.src = `img/${id}_${face}.png`;
+}
+
+function hideChara(id) {
+  const img = document.getElementById(id);
+  img.style.opacity = 0;
+}
+
+function executeCommand(cmd) {
+  switch (cmd.command) {
+    case "show":
+      showChara(cmd.chara, cmd.face, cmd.pos);
+      break;
+    case "face":
+      changeFace(cmd.chara, cmd.face);
+      break;
+    case "hide":
+      hideChara(cmd.chara);
+      break;
+  }
 }
 
 // --------------------
