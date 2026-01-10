@@ -122,3 +122,9 @@ body {
   cursor: pointer;
   border: 2px solid white;
 }
+
+#chara {
+  position: absolute;
+  bottom: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
