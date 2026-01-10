@@ -29,6 +29,7 @@ const newGameBtn = document.getElementById("newGame");
 const openLoadBtn = document.getElementById("openLoad");
 const loadMenu = document.getElementById("loadMenu");
 const toTitleBtn = document.getElementById("toTitle");
+const autoBtn = document.getElementById("autoBtn");
 
 // --------------------
 // 基本ロジック
@@ -256,6 +257,12 @@ openLoadBtn.onclick = () => {
 toTitleBtn.onclick = () => {
   gameDiv.style.display = "none";
   titleDiv.style.display = "block";
+};
+
+autoBtn.onclick = () => {
+  if (isAuto) stopAuto();
+  else startAuto();
+  autoBtn.textContent = isAuto ? "AUTO ON" : "AUTO";
 };
 
 // --------------------
