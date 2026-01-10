@@ -73,6 +73,7 @@ function showScene(key) {
 
   choicesDiv.innerHTML = "";
   const entry = scene.texts[textIndex];
+  currentEntry = entry;
   updateName(entry.name);
   typeText(entry.text);
 }
