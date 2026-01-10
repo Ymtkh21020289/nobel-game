@@ -112,6 +112,7 @@ body {
 
 #nameBox {
   position: absolute;
+  top: -28px;
   bottom: 0;
   width: 100%;
   min-height: 120px;
