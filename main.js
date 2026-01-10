@@ -78,8 +78,11 @@ function typeText(text) {
     if (i >= text.length) {
       clearInterval(typingTimer);
       isTyping = false;
+
+      // 🔽 ログに追加
+      backlog.push(text);
     }
-  }, 30); // ← 数字を小さくすると速くなる
+  }, 30);
 }
 
 function advanceText() {
