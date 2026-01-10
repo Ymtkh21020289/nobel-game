@@ -112,13 +112,12 @@ body {
 
 #nameBox {
   position: absolute;
-  top: -28px;
-  bottom: 0;
-  width: 100%;
-  min-height: 120px;
+  top: 250px;
+  width: 15%;
+  min-height: px;
   background: rgba(0,0,0,0.6);
   color: white;
-  padding: 15px;
+  padding: 3px;
   box-sizing: border-box;
   cursor: pointer;
   border: 2px solid white;
