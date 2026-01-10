@@ -1,5 +1,6 @@
 import { scenario } from "./scenario.js";
 
+let textIndex = 0;
 let current = "start";
 const flags = {};
 const bgImg = document.getElementById("bg");
@@ -37,6 +38,7 @@ function checkCondition(choice) {
 function showScene(key) {
   const scene = scenario[key];
   current = key;
+  textIndex = 0;
 
   // 背景
   if (scene.bg !== undefined) {
@@ -53,35 +55,54 @@ function showScene(key) {
     }
   }
 
-  textDiv.textContent = scene.text;
   choicesDiv.innerHTML = "";
-
-  if (scene.choices) {
-    scene.choices.forEach(choice => {
-      if (!checkCondition(choice)) return;
-
-      const btn = document.createElement("button");
-      btn.textContent = choice.text;
-
-      btn.onclick = () => {
-        if (choice.add) {
-          for (const k in choice.add) {
-            flags[k] = (flags[k] || 0) + choice.add[k];
-          }
-        }
-        if (choice.setFlag) flags[choice.setFlag] = true;
-        showScene(choice.next);
-      };
-
-      choicesDiv.appendChild(btn);
-    });
-  }
+  textDiv.textContent = scene.texts[textIndex];
 }
 
 textDiv.addEventListener("click", () => {
   const scene = scenario[current];
-  if (scene.next && !scene.choices) showScene(scene.next);
+
+  // 次のテキストがある
+  if (textIndex < scene.texts.length - 1) {
+    textIndex++;
+    textDiv.textContent = scene.texts[textIndex];
+    return;
+  }
+
+  // テキスト終了後
+  if (scene.choices) {
+    showChoices(scene.choices);
+    return;
+  }
+
+  if (scene.next) {
+    showScene(scene.next);
+  }
 });
+
+function showChoices(choices) {
+  choicesDiv.innerHTML = "";
+
+  choices.forEach(choice => {
+    if (!checkCondition(choice)) return;
+
+    const btn = document.createElement("button");
+    btn.textContent = choice.text;
+
+    btn.onclick = () => {
+      if (choice.add) {
+        for (const k in choice.add) {
+          flags[k] = (flags[k] || 0) + choice.add[k];
+        }
+      }
+      if (choice.setFlag) flags[choice.setFlag] = true;
+
+      showScene(choice.next);
+    };
+
+    choicesDiv.appendChild(btn);
+  });
+}
 
 // --------------------
 // タイトル関連
