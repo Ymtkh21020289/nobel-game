@@ -81,6 +81,7 @@ function typeText(text) {
   textDiv.textContent = "";
   isTyping = true;
   const scene = scenario[current].next;
+  textIndex = 0;
   const entry = scene.texts[textIndex];
 
   let i = 0;
