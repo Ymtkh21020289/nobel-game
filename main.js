@@ -18,6 +18,9 @@ const gameDiv = document.getElementById("game");
 const textDiv = document.getElementById("text");
 const choicesDiv = document.getElementById("choices");
 
+const logDiv = document.getElementById("log");
+const logContent = document.getElementById("logContent");
+
 const newGameBtn = document.getElementById("newGame");
 const openLoadBtn = document.getElementById("openLoad");
 const loadMenu = document.getElementById("loadMenu");
@@ -121,14 +124,42 @@ function advanceText() {
   }
 }
 
+function openLog() {
+  isLogOpen = true;
+  logDiv.style.display = "block";
+  logContent.innerHTML = "";
+
+  backlog.forEach(text => {
+    const p = document.createElement("p");
+    p.textContent = text;
+    logContent.appendChild(p);
+  });
+}
+
+function closeLog() {
+  isLogOpen = false;
+  logDiv.style.display = "none";
+}
+
 textDiv.addEventListener("click", advanceText);
 
+logDiv.addEventListener("click", closeLog);
+
 document.addEventListener("keydown", (e) => {
-  // 入力欄にフォーカスがある時は無視（将来の名前入力など対策）
-  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+  if (e.key === "l" || e.key === "L") {
+    if (!isLogOpen) openLog();
+    return;
+  }
+
+  if (isLogOpen) {
+    if (e.key === "Enter" || e.key === " ") {
+      closeLog();
+    }
+    return;
+  }
 
   if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault(); // スペースのスクロール防止
+    e.preventDefault();
     advanceText();
   }
 });
