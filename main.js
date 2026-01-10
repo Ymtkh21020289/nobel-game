@@ -19,6 +19,7 @@ const charaImg = document.getElementById("chara");
 const titleDiv = document.getElementById("title");
 const gameDiv = document.getElementById("game");
 
+const nameBox = document.getElementById("nameBox");
 const textDiv = document.getElementById("text");
 const choicesDiv = document.getElementById("choices");
 
