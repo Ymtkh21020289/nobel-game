@@ -79,10 +79,10 @@ function typeText(text) {
   }, 30); // ← 数字を小さくすると速くなる
 }
 
-textDiv.addEventListener("click", () => {
+function advanceText() {
   const scene = scenario[current];
 
-  // ① 文字表示中 → 一気に全文表示
+  // ① 文字表示中 → 全文表示
   if (isTyping) {
     clearInterval(typingTimer);
     textDiv.textContent = scene.texts[textIndex];
@@ -90,21 +90,34 @@ textDiv.addEventListener("click", () => {
     return;
   }
 
-  // ② 次のテキストがある
+  // ② 次のテキストへ
   if (textIndex < scene.texts.length - 1) {
     textIndex++;
     typeText(scene.texts[textIndex]);
     return;
   }
 
-  // ③ テキスト終了後
+  // ③ 選択肢表示
   if (scene.choices) {
     showChoices(scene.choices);
     return;
   }
 
+  // ④ 次のシーン
   if (scene.next) {
     showScene(scene.next);
+  }
+}
+
+textDiv.addEventListener("click", advanceText);
+
+document.addEventListener("keydown", (e) => {
+  // 入力欄にフォーカスがある時は無視（将来の名前入力など対策）
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault(); // スペースのスクロール防止
+    advanceText();
   }
 });
 
