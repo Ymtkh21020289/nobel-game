@@ -75,10 +75,12 @@ function showScene(key) {
   const entry = scene.texts[textIndex];
   currentEntry = entry;
   updateName(entry.name);
-  typeText(entry.text);
+  typeText(entry);
 }
 
-function typeText(text) {
+function typeText(entries) {
+  if(entries.command) return;
+  const text = entries.texts[textIndex];
   let i = 0;
   textDiv.textContent = "";
   isTyping = true;
