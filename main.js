@@ -1,6 +1,7 @@
 import { scenario } from "./scenario.js";
 
 const backlog = [];
+const charaState = {};
 let isLogOpen = false;
 let currentEntry = null;
 
