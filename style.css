@@ -65,14 +65,6 @@ body {
   z-index: 0;
 }
 
-#chara {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 90%;
-}
-
 #text {
   position: absolute;
   bottom: 0;
