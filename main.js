@@ -359,7 +359,7 @@ autoBtn.onclick = () => {
 // セーブ／ロード
 // --------------------
 function save(slot) {
-  const saveData = {
+  const data = {
     scene: current,
     textIndex,
     charaState: JSON.parse(JSON.stringify(charaState)), // 深コピー
