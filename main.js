@@ -274,7 +274,7 @@ function showChara(id, face, pos = "center") {
 
 function changeFace(id, face) {
   const img = document.getElementById(id);
-  img.src = `img/${id}_${face}.png`;
+  img.src = `img/chara/${id}_${face}.png`;
 }
 
 function hideChara(id) {
