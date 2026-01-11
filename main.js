@@ -274,16 +274,29 @@ function showChara(id, face, pos = "center") {
   if (pos === "left") img.style.left = "10%";
   if (pos === "center") img.style.left = "40%";
   if (pos === "right") img.style.left = "70%";
+
+  charaState[id] = {
+    face,
+    pos,
+    visible: true
+  };
 }
 
 function changeFace(id, face) {
   const img = document.getElementById(id);
   img.src = `images/chara/${id}_${face}.png`;
+
+  if (!charaState[id]) charaState[id] = {};
+  charaState[id].face = face;
 }
+
 
 function hideChara(id) {
   const img = document.getElementById(id);
   img.style.opacity = 0;
+
+  if (!charaState[id]) charaState[id] = {};
+  charaState[id].visible = false;
 }
 
 function executeCommand(cmd) {
@@ -312,6 +325,9 @@ function startGame() {
 function resetGame() {
   current = "start";
   for (const k in flags) delete flags[k];
+  document.querySelectorAll(".chara").forEach(img => {
+    img.style.opacity = 0;
+  });
 }
 
 // ニューゲーム
@@ -342,7 +358,12 @@ autoBtn.onclick = () => {
 // セーブ／ロード
 // --------------------
 function save(slot) {
-  const data = { current, flags };
+  const saveData = {
+    scene: current,
+    textIndex,
+    charaState: JSON.parse(JSON.stringify(charaState)), // 深コピー
+    flags
+  };
   localStorage.setItem("novelSave" + slot, JSON.stringify(data));
   alert(`スロット${slot}にセーブしました`);
 }
@@ -358,11 +379,26 @@ function load(slot) {
   resetGame();
 
   current = data.current;
+  textIndex = save.textIndex;
   for (const k in data.flags) {
     flags[k] = data.flags[k];
   }
-
+  restoreCharaState(save.charaState);
   startGame();
+}
+
+function restoreCharaState(state) {
+  // 一旦全キャラ非表示
+  document.querySelectorAll(".chara").forEach(img => {
+    img.style.opacity = 0;
+  });
+
+  for (const id in state) {
+    const s = state[id];
+    if (!s.visible) continue;
+
+    showChara(id, s.face, s.pos);
+  }
 }
 
 document.querySelectorAll(".save").forEach(btn => {
