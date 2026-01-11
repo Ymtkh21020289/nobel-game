@@ -82,11 +82,6 @@ function typeText(text) {
   let i = 0;
   textDiv.textContent = "";
   isTyping = true;
-  console.log({
-    index: textIndex,
-    entry,
-    isTyping
-  });
   typingTimer = setInterval(() => {
     textDiv.textContent += text[i];
     i++;
@@ -115,6 +110,11 @@ function updateName(name) {
 function advanceText() {
   const scene = scenario[current];
   const entry = scene.texts[textIndex];
+  console.log({
+    index: textIndex,
+    entry,
+    isTyping
+  });
 
   // ① 文字表示中 → 即全文
   if (isTyping) {
