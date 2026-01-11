@@ -129,5 +129,6 @@ body {
   position: absolute;
   bottom: 0;
   transition: opacity 0.3s, transform 0.3s;
+  max-height: 90%;
   z-index: 10
 }
