@@ -55,7 +55,6 @@ function checkCondition(choice) {
 function showScene(key) {
   const scene = scenario[key];
   current = key;
-  textIndex = 0;
   
   // 背景
   if (scene.bg !== undefined) {
@@ -325,6 +324,7 @@ function startGame() {
 
 function resetGame() {
   current = "start";
+  textIndex = 0;
   for (const k in flags) delete flags[k];
   document.querySelectorAll(".chara").forEach(img => {
     img.style.opacity = 0;
