@@ -155,6 +155,7 @@ function advanceText() {
 
   // ④ 次シーン
   if (scene.next) {
+    textIndex = 0;
     showScene(scene.next);
   }
 }
