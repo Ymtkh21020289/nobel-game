@@ -118,8 +118,9 @@ function advanceText() {
 
   // ① 文字表示中 → 即全文
   if (isTyping) {
+    const back = scene.texts[textIndex-1];
     clearInterval(typingTimer);
-    textDiv.textContent = entry.text;
+    textDiv.textContent = back.text;
     isTyping = false;
 
     onTextFinished();
@@ -135,7 +136,7 @@ function advanceText() {
   }
 
   // ② 次のテキスト
-  if (entry.text && textIndex < scene.texts.length - 1) {
+  if (entry.text && textIndex < scene.texts.length) {
     textIndex++;
     const next = scene.texts[textIndex];
 
