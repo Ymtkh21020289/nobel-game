@@ -75,7 +75,7 @@ function showScene(key) {
   const entry = scene.texts[textIndex];
   currentEntry = entry;
   updateName(entry.name);
-  typeText(entry);
+  advanceText();
 }
 
 function typeText(entries) {
