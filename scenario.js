@@ -11,7 +11,8 @@ export const scenario = {
       { name: null, text: "いや、そんなことは考えるべきじゃないな。" },
       { name: null, text: "何はともあれ、俺の新しい青春が幕を開けるんだ！" },
       { name: null, text: "お、もうすぐ入学式が始まる時間だ。" },
-      { name: null, text: "早く体育館に向わなくちゃな。" }
+      { name: null, text: "早く体育館に向わなくちゃな。" },
+      { name: null, text: "変にプログラム変えるよりこうする方が楽なんですよね。by製作者" }
     ],
 
     next: "hall"
@@ -36,7 +37,10 @@ export const scenario = {
       { name: "？？？", text: "「さぁ！共に立ち上がり、巨悪を打ち倒そうではないか！」" },
       { command: "hide", chara: "captain" },
       { name: null, text: "そういうと彼女は深々と礼をしてステージを降りた。" },
-      { name: null, text: "そういうと彼女は深々と礼をしてステージを降りた。" }
+      { name: null, text: "何だったんだ今のは？" },
+      { name: null, text: "あれがいわゆる「厨二病」ってやつなのか？" },
+      { name: null, text: "良く分からないけど、怖いからあの子には近付かないでおこう…" },
+      { name: null, text: "ゲームシステム的にシーンごとのいちばん最後の文章だけ読まれないんですよね。" }
     ]
   }
 };
