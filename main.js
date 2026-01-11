@@ -139,7 +139,7 @@ function advanceText() {
   if (entry.text && textIndex < scene.texts.length - 1) {
     textIndex++;
     const next = scene.texts[textIndex];
-
+    const back = scene.texts[textIndex-1];
     currentEntry = back;
     updateName(entry.name);
     typeText(entry.text);
