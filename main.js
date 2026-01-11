@@ -82,6 +82,11 @@ function typeText(text) {
   let i = 0;
   textDiv.textContent = "";
   isTyping = true;
+  console.log({
+    index: textIndex,
+    entry,
+    isTyping
+  });
   typingTimer = setInterval(() => {
     textDiv.textContent += text[i];
     i++;
