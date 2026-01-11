@@ -78,9 +78,7 @@ function showScene(key) {
   advanceText();
 }
 
-function typeText(entries) {
-  if(entries.command) return;
-  const text = entries.text;
+function typeText(text) {
   let i = 0;
   textDiv.textContent = "";
   isTyping = true;
@@ -138,7 +136,7 @@ function advanceText() {
 
     currentEntry = next;
     updateName(next.name);
-    typeText(next);
+    typeText(next.text);
     return;
   }
 
