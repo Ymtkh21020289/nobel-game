@@ -136,7 +136,7 @@ function advanceText() {
   }
 
   // ② 次のテキスト
-  if (entry.text && textIndex < scene.texts.length) {
+  if (entry.text && textIndex < scene.texts.length - 1) {
     textIndex++;
     const next = scene.texts[textIndex];
 
