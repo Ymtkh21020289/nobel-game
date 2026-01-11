@@ -366,6 +366,7 @@ function save(slot) {
     flags
   };
   localStorage.setItem("novelSave" + slot, JSON.stringify(data));
+  console.log("SAVE DATA:", data);
   alert(`スロット${slot}にセーブしました`);
 }
 
