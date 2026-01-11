@@ -386,7 +386,7 @@ function load(slot) {
   for (const k in data.flags) {
     flags[k] = data.flags[k];
   }
-  restoreCharaState(save.charaState);
+  restoreCharaState(data.charaState);
   startGame();
 }
 
