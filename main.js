@@ -380,7 +380,7 @@ function load(slot) {
   const data = JSON.parse(json);
   resetGame();
 
-  current = data.current;
+  current = data.scene;
   textIndex = save.textIndex;
   for (const k in data.flags) {
     flags[k] = data.flags[k];
