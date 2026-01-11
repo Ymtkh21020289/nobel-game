@@ -129,6 +129,7 @@ function advanceText() {
   // 🔽 command は即実行して次へ
   if (entry.command) {
     executeCommand(entry);
+    textIndex++;
     advanceText();
     return;
   }
