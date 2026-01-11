@@ -140,7 +140,7 @@ function advanceText() {
     textIndex++;
     const next = scene.texts[textIndex];
 
-    currentEntry = next;
+    currentEntry = back;
     updateName(entry.name);
     typeText(entry.text);
     return;
