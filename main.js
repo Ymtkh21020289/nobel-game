@@ -381,7 +381,7 @@ function load(slot) {
   resetGame();
 
   current = data.scene;
-  textIndex = save.textIndex;
+  textIndex = data.textIndex;
   for (const k in data.flags) {
     flags[k] = data.flags[k];
   }
