@@ -317,9 +317,56 @@ function executeCommand(cmd) {
 // --------------------
 // タイトル関連
 // --------------------
-function startGame() {
+const preloadImages = [];
+let loadedCount = 0;
+let totalCount = 0;
+
+function preloadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = src;
+
+    img.onload = () => {
+      loadedCount++;
+      resolve();
+    };
+
+    img.onerror = () => {
+      console.warn("Failed to load:", src);
+      loadedCount++;
+      resolve(); // エラーでも進める
+    };
+
+    preloadImages.push(img); // GC対策
+  });
+}
+
+async function preloadAllAssets() {
+  const tasks = [];
+
+  // 背景
+  ASSETS.backgrounds.forEach(bg => {
+    totalCount++;
+    tasks.push(preloadImage(`img/bg/${bg}`));
+  });
+
+  // 立ち絵
+  for (const chara in ASSETS.characters) {
+    ASSETS.characters[chara].forEach(face => {
+      totalCount++;
+      tasks.push(
+        preloadImage(`img/chara/${chara}_${face}.png`)
+      );
+    });
+  }
+
+  await Promise.all(tasks);
+}
+
+async function startGame() {
   titleDiv.style.display = "none";
   gameDiv.style.display = "block";
+  await preloadAllAssets();
   showScene(current);
 }
 
