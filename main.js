@@ -357,7 +357,7 @@ async function preloadAllAssets() {
   // 背景
   ASSETS.backgrounds.forEach(bg => {
     totalCount++;
-    tasks.push(preloadImage(`img/bg/${bg}`));
+    tasks.push(preloadImage(`images/bg/${bg}`));
   });
 
   // 立ち絵
@@ -365,7 +365,7 @@ async function preloadAllAssets() {
     ASSETS.characters[chara].forEach(face => {
       totalCount++;
       tasks.push(
-        preloadImage(`img/chara/${chara}_${face}.png`)
+        preloadImage(`images/chara/${chara}_${face}.png`)
       );
     });
   }
