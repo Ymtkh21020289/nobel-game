@@ -1,5 +1,15 @@
 import { scenario } from "./scenario.js";
 
+const ASSETS = {
+  backgrounds: [
+    "bright_gym.jpg",
+    "bright_street.jpg"
+  ],
+  characters: {
+    captain: ["serious", "serious2"]
+  }
+};
+
 const backlog = [];
 const charaState = {};
 let isLogOpen = false;
