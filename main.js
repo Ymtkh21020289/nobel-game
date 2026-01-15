@@ -449,6 +449,7 @@ function load(slot) {
 
   current = data.scene;
   textIndex = data.textIndex;
+  charaState = data.charaState
   for (const k in data.flags) {
     flags[k] = data.flags[k];
   }
@@ -460,13 +461,11 @@ function restoreCharaState(state) {
   // 一旦全キャラ非表示
   document.querySelectorAll(".chara").forEach(img => {
     img.style.opacity = 0;
-    img.visible = false;
   });
 
   for (const id in state) {
     const s = state[id];
     if (!s.visible) continue;
-
     showChara(id, s.face, s.pos);
   }
 }
