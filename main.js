@@ -451,6 +451,7 @@ function restoreCharaState(state) {
   // 一旦全キャラ非表示
   document.querySelectorAll(".chara").forEach(img => {
     img.style.opacity = 0;
+    img.visible = false;
   });
 
   for (const id in state) {
