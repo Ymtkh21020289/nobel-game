@@ -391,7 +391,7 @@ function resetGame() {
 
 function  initialize() {
   for (const chara in ASSETS.characters) {
-    charaState[id] = {
+    charaState[chara] = {
       visible: false
     };
   }
