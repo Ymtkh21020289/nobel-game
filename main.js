@@ -389,8 +389,17 @@ function resetGame() {
   });
 }
 
+function  initialize() {
+  for (const chara in ASSETS.characters) {
+    charaState[id] = {
+      visible: false
+    };
+  });
+}
+
 // ニューゲーム
 newGameBtn.onclick = () => {
+  initialize();
   resetGame();
   startGame();
 };
