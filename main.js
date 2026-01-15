@@ -394,7 +394,7 @@ function  initialize() {
     charaState[id] = {
       visible: false
     };
-  });
+  };
 }
 
 // ニューゲーム
