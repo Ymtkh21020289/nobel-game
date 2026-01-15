@@ -449,7 +449,9 @@ function load(slot) {
 
   current = data.scene;
   textIndex = data.textIndex;
-  charaState.push(data.charaState);
+  for (const chara in data.charaState) {
+    charaState[chara] = data.charaState[chara];
+  }
   for (const k in data.flags) {
     flags[k] = data.flags[k];
   }
